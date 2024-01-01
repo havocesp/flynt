@@ -63,8 +63,7 @@ def formatted_value(
             fmt_str=fmt_prefix,
             conversion=conversion_methods[fmt_spec],
         )
-    fmt_spec = translate_conversion_types.get(fmt_spec, fmt_spec)
-    if fmt_spec == "d":
+    if (fmt_spec := translate_conversion_types.get(fmt_spec, fmt_spec)) == "d":
         # assume built-in len always returns int
         if not _is_len_call(val):
             if not aggressive:
@@ -200,8 +199,7 @@ def transform_generic(
     Returns ast.JoinedStr (f-string), bool: str-in-str
     """
     assert isinstance(node.left, ast.Str)
-    has_dict_str_format = DICT_PATTERN.findall(node.left.s)
-    if has_dict_str_format:
+    if has_dict_str_format := DICT_PATTERN.findall(node.left.s):
         return transform_dict(node, aggressive=aggressive)
 
     any(isinstance(n, (ast.Str, ast.JoinedStr)) for n in ast.walk(node.right))

@@ -47,13 +47,12 @@ def _fstringify_file(
             log.error(f"Exception while reading {filename}", exc_info=True)
             return None
 
-    result = fstringify_code(
+
+    if (result := fstringify_code(
         contents=contents,
         state=state,
         filename=filename,
-    )
-
-    if result is None:
+    )) is None:
         return None
 
     new_code = result.content
@@ -168,11 +167,10 @@ def fstringify_files(
     total_expressions = 0
     start_time = time.time()
     for path in files:
-        result = _fstringify_file(
+        if result := _fstringify_file(
             path,
             state,
-        )
-        if result:
+        ):
             if result.n_changes:
                 changed_files += 1
                 total_expressions += result.n_changes

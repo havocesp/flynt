@@ -43,8 +43,7 @@ def transform_join(tree: ast.AST, *args, **kwargs) -> Tuple[str, bool]:
 
     jt = JoinTransformer()
     new_tree = jt.visit(tree)
-    changed = jt.counter > 0
-    if changed:
+    if changed := jt.counter > 0:
         new_code = fixup_transformed(new_tree)
     else:
         new_code = ""

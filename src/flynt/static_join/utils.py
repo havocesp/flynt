@@ -25,10 +25,8 @@ def get_arguments_from_static_join(args: Sequence[ast.AST]) -> Optional[List[ast
 
 
 def get_static_join_bits(node: ast.Call) -> Optional[Tuple[str, List[ast.AST]]]:
-    joiner = get_joiner_from_static_join(node.func)
-    if joiner is None:
+    if (joiner := get_joiner_from_static_join(node.func)) is None:
         return None
-    args = get_arguments_from_static_join(node.args)
-    if args is None:
+    if (args := get_arguments_from_static_join(node.args)) is None:
         return None
     return joiner, args

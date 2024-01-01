@@ -38,13 +38,12 @@ def main():
         run_flynt_cli()
     flynt_help = sio.getvalue()
     original_readme_content = readme_path.read_text()
-    readme_content = re.sub(
+    if (readme_content := re.sub(
         rf"{options_marker}\n```.+?```\n",
         f"{options_marker}\n```\n{flynt_help}\n```\n",
         original_readme_content,
         flags=re.DOTALL,
-    )
-    if readme_content != original_readme_content:
+    )) != original_readme_content:
         readme_path.write_text(readme_content)
         print("Updated README.md")
 

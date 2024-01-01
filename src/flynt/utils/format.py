@@ -67,8 +67,7 @@ def get_quote_type(code: str) -> Optional[str]:
 
 
 def remove_quotes(code: str) -> str:
-    quote_type = get_quote_type(code)
-    if quote_type:
+    if quote_type := get_quote_type(code):
         return code[len(quote_type) : -len(quote_type)]
     return code
 
